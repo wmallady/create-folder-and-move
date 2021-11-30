@@ -1,0 +1,21 @@
+Public Sub saveAttachtoDisk(itm As Outlook.MailItem)
+Dim objAtt As Outlook.Attachment
+Dim saveFolder As String
+saveFolder = "C:\Users\someone\Desktop\folder"
+For Each objAtt In itm.Attachments
+stFileName = saveFolder & "\" & objAtt.DisplayName
+i = 0
+JumpHere:
+If Dir(stFileName) = "" Then
+If UCase(objAtt.DisplayName) Like "*.PDF" Or UCase(objAtt.DisplayName) Like "*.pdf" Or UCase(objAtt.DisplayName) Like "*.TIF" Or UCase(objAtt.DisplayName) Like "*.tif" Then
+objAtt.SaveAsFile stFileName
+End If
+Else
+i = i + 1
+stFileName = saveFolder & "\" & i & " - " & objAtt.DisplayName
+GoTo JumpHere
+End If
+Set objAtt = Nothing
+Next
+
+End Sub
